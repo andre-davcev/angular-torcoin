@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "torcoin",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "torcoin": {
+      "projectType": "application",
+      "root": "apps/torcoin",
+      "sourceRoot": "apps/torcoin/src",
+      "prefix": "atd",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/torcoin",
+            "index": "apps/torcoin/src/index.html",
+            "main": "apps/torcoin/src/main.ts",
+            "polyfills": "apps/torcoin/src/polyfills.ts",
+            "tsConfig": "apps/torcoin/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/torcoin/src/favicon.ico",
+              "apps/torcoin/src/assets"
+            ],
+            "styles": ["apps/torcoin/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/torcoin/src/environments/environment.ts",
+                  "with": "apps/torcoin/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "torcoin:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "torcoin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "torcoin:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/torcoin/src/**/*.ts",
+              "apps/torcoin/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/torcoin"],
+          "options": {
+            "jestConfig": "apps/torcoin/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "torcoin-e2e": {
+      "root": "apps/torcoin-e2e",
+      "sourceRoot": "apps/torcoin-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/torcoin-e2e/cypress.json",
+            "tsConfig": "apps/torcoin-e2e/tsconfig.e2e.json",
+            "devServerTarget": "torcoin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "torcoin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/torcoin-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
