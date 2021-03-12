@@ -1,3 +1,3 @@
 module.exports = {
-  projects: ['<rootDir>/apps/torcoin'],
+  projects: ['<rootDir>/apps/torcoin', '<rootDir>/libs/core'],
 };
