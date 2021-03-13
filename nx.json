@@ -18,6 +18,7 @@
   "projects": {
     "torcoin": { "tags": [] },
     "torcoin-e2e": { "tags": [], "implicitDependencies": ["torcoin"] },
-    "core": { "tags": [] }
+    "core": { "tags": [] },
+    "app-torcoin": { "tags": [] }
   }
 }

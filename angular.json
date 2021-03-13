@@ -170,6 +170,31 @@
           }
         }
       }
+    },
+    "app-torcoin": {
+      "projectType": "library",
+      "root": "libs/app/torcoin",
+      "sourceRoot": "libs/app/torcoin/src",
+      "prefix": "atd",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/app/torcoin/src/**/*.ts",
+              "libs/app/torcoin/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/app/torcoin"],
+          "options": {
+            "jestConfig": "libs/app/torcoin/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
