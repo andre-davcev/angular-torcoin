@@ -195,6 +195,31 @@
           }
         }
       }
+    },
+    "crypto": {
+      "projectType": "library",
+      "root": "libs/crypto",
+      "sourceRoot": "libs/crypto/src",
+      "prefix": "atd",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/crypto/src/**/*.ts",
+              "libs/crypto/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/crypto"],
+          "options": {
+            "jestConfig": "libs/crypto/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

@@ -19,6 +19,7 @@
     "torcoin": { "tags": [] },
     "torcoin-e2e": { "tags": [], "implicitDependencies": ["torcoin"] },
     "core": { "tags": [] },
-    "app-torcoin": { "tags": [] }
+    "app-torcoin": { "tags": [] },
+    "crypto": { "tags": [] }
   }
 }
