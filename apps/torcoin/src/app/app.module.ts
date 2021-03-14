@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule, NbSidebarModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+
+import { FooterComponentModule, HeaderComponentModule, SidebarComponentModule } from '@atd/torcoin';
+
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -16,7 +19,11 @@ import { AppRoutingModule } from './app-routing.module';
     NbLayoutModule,
     NbEvaIconsModule,
     NbSidebarModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+
+    HeaderComponentModule,
+    SidebarComponentModule,
+    FooterComponentModule
   ],
   providers: [],
   bootstrap: [AppComponent],

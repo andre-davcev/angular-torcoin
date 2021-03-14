@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@atd/core": ["libs/core/src/index.ts"],
-      "@atd/app/torcoin": ["libs/app/torcoin/src/index.ts"]
+      "@atd/torcoin": ["libs/app/torcoin/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
