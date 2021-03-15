@@ -8,7 +8,7 @@ import { FooterComponentModule, HeaderComponentModule, SidebarComponentModule } 
     HeaderComponentModule,
     SidebarComponentModule,
     FooterComponentModule
-  ]
+  ],
+  declarations: []
 })
 export class AppTorcoinModule {}
-``

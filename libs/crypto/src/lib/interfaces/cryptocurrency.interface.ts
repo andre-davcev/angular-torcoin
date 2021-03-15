@@ -1,4 +1,5 @@
 import { Convert } from './convert.interface';
+import { Platform } from './platform.interface';
 
 export interface Cryptocurrency {
   circulating_supply: number;
@@ -9,7 +10,7 @@ export interface Cryptocurrency {
   max_supply: number;
   name: string;
   num_market_pairs: number;
-  platform: string | null;
+  platform: Platform | null;
   quote: Record<string, Convert>;
   slug: string;
   symbol: string;
