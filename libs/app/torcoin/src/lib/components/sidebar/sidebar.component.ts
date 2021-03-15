@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit {
         {
           title: 'Prices',
           link: '/pages/charts/echarts',
+          selected: true
         }
       ],
     },
