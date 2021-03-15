@@ -25,7 +25,9 @@
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "api-build": "cd apps/torcoin-api && gcloud builds submit --tag gcr.io/torcoin-d7a64/torcoin",
+    "api-deploy": "cd apps/torcoin-api && gcloud beta run deploy --image gcr.io/torcoin-d7a64/torcoin"
   },
   "private": true,
   "dependencies": {

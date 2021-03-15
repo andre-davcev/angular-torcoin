@@ -7,9 +7,14 @@ import { NbThemeModule, NbLayoutModule, NbSidebarModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { FooterComponentModule, HeaderComponentModule, SidebarComponentModule } from '@atd/torcoin';
+import { StatePrices } from '@atd/crypto';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +31,11 @@ import { HttpClientModule } from '@angular/common/http';
 
     HeaderComponentModule,
     SidebarComponentModule,
-    FooterComponentModule
+    FooterComponentModule,
+
+    NgxsRouterPluginModule.forRoot(),
+    NgxsModule.forRoot([StatePrices]),
+    NgxsReduxDevtoolsPluginModule.forRoot({disabled: environment.production})
   ],
   providers: [],
   bootstrap: [AppComponent],
