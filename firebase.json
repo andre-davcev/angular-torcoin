@@ -1,0 +1,18 @@
+{
+  "hosting": {
+    "public": "dist/apps/torcoin",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html",
+      "run": {
+        "serviceId": "torcoin",
+        "region": "us-central1"
+      }
+    }]
+  }
+}

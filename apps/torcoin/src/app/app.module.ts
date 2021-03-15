@@ -9,12 +9,15 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FooterComponentModule, HeaderComponentModule, SidebarComponentModule } from '@atd/torcoin';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+
     NbThemeModule.forRoot({ name: 'corporate' }),
     NbLayoutModule,
     NbEvaIconsModule,
