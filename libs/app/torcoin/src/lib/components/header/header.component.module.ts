@@ -7,7 +7,10 @@ import { HeaderComponent } from './header.component';
 
 
 @NgModule({
-  imports: [CommonModule, LogoComponentModule],
+  imports: [
+    CommonModule,
+    LogoComponentModule
+  ],
   declarations: [HeaderComponent],
   exports: [HeaderComponent]
 })
