@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NbMenuItem } from '@nebular/theme';
 
 @Component({
   selector: 'atd-header',
@@ -11,7 +10,7 @@ export class HeaderComponent implements OnInit {
   public userMenu = [ { title: 'Log out' } ];
   public user = {
     name: 'Elon Musk',
-    picture: 'assets/images/elon-musk.jpeg'
+    picture: '//cdn.shopify.com/s/files/1/0345/8429/7516/files/AJ_Pryor.jpg?v=1584330112'
   }
   constructor() { }
 
