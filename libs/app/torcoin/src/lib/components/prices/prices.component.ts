@@ -10,7 +10,6 @@ import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '@atd/core';
 import { CryptoWithMetadata, StatePrices } from '@atd/crypto';
 
-import { PricesColumnDisplay } from './prices-column-display.enum';
 import { PricesColumnKey } from './prices-column-key.enum';
 
 @Component({
@@ -21,7 +20,6 @@ import { PricesColumnKey } from './prices-column-key.enum';
 export class PricesComponent extends BaseComponent implements AfterViewInit, OnInit {
   @Select(StatePrices.dataWithMetadata) data$: Observable<Array<CryptoWithMetadata>>;
 
-  public PricesColumnDisplay: any = PricesColumnDisplay;
   public PricesColumnKey: any = PricesColumnKey;
 
   public displayedColumns: Array<string> = Object.values(PricesColumnKey);
@@ -40,6 +38,8 @@ export class PricesComponent extends BaseComponent implements AfterViewInit, OnI
     ).subscribe((data: Array<CryptoWithMetadata>) => {
       this.dataSource = new MatTableDataSource(data)
     });
+
+    console.log(this.displayedColumns);
   }
 
   public ngAfterViewInit(): void {
