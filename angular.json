@@ -51,7 +51,7 @@
               "apps/torcoin/src/favicon.ico",
               "apps/torcoin/src/assets"
             ],
-            "styles": ["apps/torcoin/src/styles.scss"],
+            "styles": ["./node_modules/@angular/material/prebuilt-themes/indigo-pink.css", "apps/torcoin/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
