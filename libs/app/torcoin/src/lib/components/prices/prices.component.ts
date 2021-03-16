@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,7 +17,7 @@ import { PricesColumnKey } from './prices-column-key.enum';
   templateUrl: './prices.component.html',
   styleUrls: ['./prices.component.scss'],
 })
-export class PricesComponent extends BaseComponent implements AfterViewInit, OnInit {
+export class PricesComponent extends BaseComponent implements AfterViewInit {
   @Select(StatePrices.dataWithMetadata) data$: Observable<Array<CryptoWithMetadata>>;
 
   public PricesColumnKey: any = PricesColumnKey;
@@ -32,19 +32,16 @@ export class PricesComponent extends BaseComponent implements AfterViewInit, OnI
     super();
   }
 
-  public ngOnInit(): void {
+  public ngAfterViewInit(): void {
+    this.dataSource = new MatTableDataSource([]);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
     this.data$.pipe(
       takeUntil(this.destroy$)
     ).subscribe((data: Array<CryptoWithMetadata>) => {
-      this.dataSource = new MatTableDataSource(data)
+      this.dataSource.data = data;
     });
-
-    console.log(this.displayedColumns);
-  }
-
-  public ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   public applyFilter(event: Event): void {

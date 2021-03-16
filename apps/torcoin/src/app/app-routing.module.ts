@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
 
-import { PricesComponentModule } from '@atd/torcoin';
+import { HomeComponentModule, PricesComponentModule } from '@atd/torcoin';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'prices', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', loadChildren: () => HomeComponentModule},
   { path: 'prices', loadChildren: () => PricesComponentModule }
 ];
 

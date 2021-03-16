@@ -1,4 +1,5 @@
 export * from './footer';
-export * from './prices';
 export * from './header';
+export * from './home';
+export * from './prices';
 export * from './sidebar';
