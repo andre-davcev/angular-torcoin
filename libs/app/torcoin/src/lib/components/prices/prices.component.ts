@@ -55,4 +55,8 @@ export class PricesComponent extends BaseComponent implements AfterViewInit, OnI
       this.dataSource.paginator.firstPage();
     }
   }
+
+  public clickedFavorite(row: CryptoWithMetadata) {
+    row.favorite = !row.favorite;
+  }
 }

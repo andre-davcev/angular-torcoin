@@ -1,3 +1,5 @@
+@import "variables";
+
 @media screen and (min-width: 400px) {
   .nb-column-name,
   .nb-column-size {
@@ -37,4 +39,23 @@ table {
   height: 24px;
   width: 24px;
   border-radius: 50%;
+}
+
+.price-gain {
+  color: $app-color-money-gain;
+}
+
+.price-loss {
+  color: $app-color-money-loss;
+}
+
+td.mat-column-favorite {
+  mat-icon {
+    cursor: pointer;
+    color: $app-color-grey-text;
+
+    &.is-favorite {
+      color: $app-color-primary;
+    }
+  }
 }
