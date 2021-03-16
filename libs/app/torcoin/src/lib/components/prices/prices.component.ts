@@ -1,87 +1,58 @@
-import { Component, Input } from '@angular/core';
-import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
-interface TreeNode<T> {
-  data: T;
-  children?: TreeNode<T>[];
-  expanded?: boolean;
-}
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-interface FSEntry {
-  name: string;
-  size: string;
-  kind: string;
-  items?: number;
-}
+import { BaseComponent } from '@atd/core';
+import { CryptoWithMetadata, StatePrices } from '@atd/crypto';
+
+import { PricesColumnDisplay } from './prices-column-display.enum';
+import { PricesColumnKey } from './prices-column-key.enum';
 
 @Component({
   selector: 'atd-prices',
   templateUrl: './prices.component.html',
   styleUrls: ['./prices.component.scss'],
 })
-export class PricesComponent {
-  customColumn = 'name';
-  defaultColumns = [ 'size', 'kind', 'items' ];
-  allColumns = [ this.customColumn, ...this.defaultColumns ];
+export class PricesComponent extends BaseComponent implements AfterViewInit, OnInit {
+  @Select(StatePrices.dataWithMetadata) data$: Observable<Array<CryptoWithMetadata>>;
 
-  dataSource: NbTreeGridDataSource<FSEntry>;
+  public PricesColumnDisplay: any = PricesColumnDisplay;
+  public PricesColumnKey: any = PricesColumnKey;
 
-  sortColumn: string;
-  sortDirection: NbSortDirection = NbSortDirection.NONE;
+  public displayedColumns: Array<string> = Object.values(PricesColumnKey);
+  public dataSource: MatTableDataSource<CryptoWithMetadata>;
 
-  constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
-    this.dataSource = this.dataSourceBuilder.create(this.data);
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+
+  constructor() {
+    super();
   }
 
-  updateSort(sortRequest: NbSortRequest): void {
-    this.sortColumn = sortRequest.column;
-    this.sortDirection = sortRequest.direction;
+  public ngOnInit(): void {
+    this.data$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((data: Array<CryptoWithMetadata>) => {
+      this.dataSource = new MatTableDataSource(data)
+    });
   }
 
-  getSortDirection(column: string): NbSortDirection {
-    if (this.sortColumn === column) {
-      return this.sortDirection;
+  public ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  public applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-    return NbSortDirection.NONE;
-  }
-
-  private data: TreeNode<FSEntry>[] = [
-    {
-      data: { name: 'Projects', size: '1.8 MB', items: 5, kind: 'dir' },
-      children: [],
-    },
-    {
-      data: { name: 'Reports', kind: 'dir', size: '400 KB', items: 2 },
-      children: [],
-    },
-    {
-      data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-      children: [],
-    },
-  ];
-
-  getShowOn(index: number) {
-    const minWithForMultipleColumns = 400;
-    const nextColumnStep = 100;
-    return minWithForMultipleColumns + (nextColumnStep * index);
-  }
-}
-
-@Component({
-  selector: 'nb-fs-icon',
-  template: `
-    <nb-tree-grid-row-toggle [expanded]="expanded" *ngIf="isDir(); else fileIcon">
-    </nb-tree-grid-row-toggle>
-    <ng-template #fileIcon>
-      <nb-icon icon="file-text-outline"></nb-icon>
-    </ng-template>
-  `,
-})
-export class FsIconComponent {
-  @Input() kind: string;
-  @Input() expanded: boolean;
-
-  isDir(): boolean {
-    return this.kind === 'dir';
   }
 }

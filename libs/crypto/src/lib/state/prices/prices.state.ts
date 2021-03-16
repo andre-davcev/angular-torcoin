@@ -11,7 +11,8 @@ import {
 import { PricesService } from '../../services';
 import { of } from 'rxjs';
 import { ResponseCryptocurrency } from '../../responses';
-import { Cryptocurrency, StatusList } from '../../interfaces';
+import { Cryptocurrency, CryptoWithMetadata, StatusList } from '../../interfaces';
+import { Currency } from '../../enums';
 
 @State<StatePricesModel>(StatePricesOptions)
 @Injectable()
@@ -35,6 +36,20 @@ export class StatePrices {
 
   @Selector() static data(state: StatePricesModel): Array<Cryptocurrency> {
     return StatePrices.response(state)?.data || [];
+  }
+
+  @Selector() static dataWithMetadata(state: StatePricesModel): Array<CryptoWithMetadata> {
+    return StatePrices.data(state)
+      .map((value: Cryptocurrency, index: number) =>
+        ({
+          ...value,
+          rank: index + 1,
+          price: value.quote[Currency.USD].price,
+          change: value.quote[Currency.USD].percent_change_24h,
+          marketCap: value.quote[Currency.USD].market_cap,
+          favorite: false
+        })
+      );
   }
 
   @Selector() static status(state: StatePricesModel): StatusList | null {

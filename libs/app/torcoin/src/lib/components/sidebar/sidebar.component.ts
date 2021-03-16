@@ -15,17 +15,19 @@ export class SidebarComponent implements OnInit {
     },
     {
       title: 'Home',
-      icon: 'home-outline'
+      icon: 'home-outline',
+      link: '/home',
     },
     {
       title: 'Prices',
       icon: 'pie-chart-outline',
+      link: '/prices',
       selected: true
     },
     {
       title: 'Logout',
       icon: 'lock-outline'
-    },
+    }
   ];
 
   constructor() { }

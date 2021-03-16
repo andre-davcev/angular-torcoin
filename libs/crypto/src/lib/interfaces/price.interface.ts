@@ -1,4 +1,4 @@
-export interface Convert {
+export interface Price {
   last_updated: string;
   market_cap: number;
   percent_change_1h: number;

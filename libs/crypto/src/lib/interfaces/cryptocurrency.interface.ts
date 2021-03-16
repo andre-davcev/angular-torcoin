@@ -1,4 +1,4 @@
-import { Convert } from './convert.interface';
+import { Price } from './price.interface';
 import { Platform } from './platform.interface';
 
 export interface Cryptocurrency {
@@ -11,7 +11,7 @@ export interface Cryptocurrency {
   name: string;
   num_market_pairs: number;
   platform: Platform | null;
-  quote: Record<string, Convert>;
+  quote: Record<string, Price>;
   slug: string;
   symbol: string;
   tags: Array<string>;

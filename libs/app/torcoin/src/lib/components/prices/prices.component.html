@@ -4,33 +4,61 @@
   </nb-card-header>
 
   <nb-card-body>
-    <label class="search-label" for="search">Search:</label>
-    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Cryptocurrency" #input>
+    </mat-form-field>
 
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+    <div>
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="favorite">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row"> {{ row.favorite }} </td>
+        </ng-container>
 
-      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+        <ng-container matColumnDef="rank">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+          <td mat-cell *matCellDef="let row"> {{ row.rank }} </td>
+        </ng-container>
 
-      <ng-container [nbTreeGridColumnDef]="customColumn">
-        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
-          {{customColumn}}
-        </th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">
-          <nb-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></nb-fs-icon>
-          {{row.data[customColumn]}}
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let row">
+            <img class="coin-logo" [src]="'https://s2.coinmarketcap.com/static/img/coins/64x64/' + row.id + '.png'">
+            {{ row.name }}
+          </td>
+        </ng-container>
 
-      <ng-container *ngFor="let column of defaultColumns; let index = index"
-                    [nbTreeGridColumnDef]="column"
-                    [showOn]="getShowOn(index)">
-        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-          {{column}}
-        </th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
-      </ng-container>
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+          <td mat-cell *matCellDef="let row"> {{ row.symbol }} </td>
+        </ng-container>
 
-    </table>
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+          <td mat-cell *matCellDef="let row"> {{ row.price | currency }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="change">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Change </th>
+          <td mat-cell *matCellDef="let row"> {{ row.change }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="marketCap">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Market Cap </th>
+          <td mat-cell *matCellDef="let row"> {{ row.marketCap | currency }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="7">No data matching the filter "{{ input.value }}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator pageSize="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
   </nb-card-body>
 </nb-card>
