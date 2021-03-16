@@ -120,11 +120,17 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/torcoin"],
+          "outputs": [
+            "coverage/apps/torcoin"
+          ],
           "options": {
             "jestConfig": "apps/torcoin/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     },
@@ -149,7 +155,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/torcoin-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/torcoin-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -171,7 +179,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/core"],
+          "outputs": [
+            "coverage/libs/core"
+          ],
           "options": {
             "jestConfig": "libs/core/jest.config.js",
             "passWithNoTests": true
@@ -196,7 +206,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/app/torcoin"],
+          "outputs": [
+            "coverage/libs/app/torcoin"
+          ],
           "options": {
             "jestConfig": "libs/app/torcoin/jest.config.js",
             "passWithNoTests": true
@@ -221,7 +233,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/crypto"],
+          "outputs": [
+            "coverage/libs/crypto"
+          ],
           "options": {
             "jestConfig": "libs/crypto/jest.config.js",
             "passWithNoTests": true
