@@ -15,7 +15,7 @@ export class PricesService {
   public latest(start: number = 1, limit: number = 5000, convert: string = 'USD'): Observable<any> {
     const url: string = `${this.domain}/prices`;
 
-    return of(RESPONSE_CRYPTOCURRENCY);
+    // return of(RESPONSE_CRYPTOCURRENCY);
     return this.http.get(url);
   }
 }
