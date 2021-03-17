@@ -10,9 +10,24 @@ const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'auth', loadChildren: () => AuthComponentModule, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToHome } },
-  { path: 'home', loadChildren: () => HomeComponentModule, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'prices', loadChildren: () => PricesComponentModule, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } }
+  {
+    path: 'auth',
+    loadChildren: () => AuthComponentModule,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectLoggedInToHome }
+  },
+  {
+    path: 'home',
+    loadChildren: () => HomeComponentModule,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
+  },
+  {
+    path: 'prices',
+    loadChildren: () => PricesComponentModule,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
+  }
 ];
 
 @NgModule({

@@ -31,12 +31,12 @@ import { StateAuth } from '@atd/core';
     HttpClientModule,
 
     AngularFireModule.initializeApp({
-      apiKey: "AIzaSyBi0RilHu2DvJsFcsMPBOEE_kffPTQ0lZ0",
-      authDomain: "torcoin-d7a64.firebaseapp.com",
-      projectId: "torcoin-d7a64",
-      storageBucket: "torcoin-d7a64.appspot.com",
-      messagingSenderId: "603406295829",
-      appId: "1:603406295829:web:f8baaa0038a0c760677f1c"
+      apiKey: 'AIzaSyBi0RilHu2DvJsFcsMPBOEE_kffPTQ0lZ0',
+      authDomain: 'torcoin-d7a64.firebaseapp.com',
+      projectId: 'torcoin-d7a64',
+      storageBucket: 'torcoin-d7a64.appspot.com',
+      messagingSenderId: '603406295829',
+      appId: '1:603406295829:web:f8baaa0038a0c760677f1c'
     }),
     AngularFireAuthModule,
     AngularFirestoreModule,

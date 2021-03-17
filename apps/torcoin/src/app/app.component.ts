@@ -13,7 +13,5 @@ export class AppComponent {
 
   @Select(StateAuth.authenticated) authenticated$: Observable<boolean>;
 
-  private title: string = 'torqoin';
-
-  constructor() { }
+  private title = 'torqoin';
 }
