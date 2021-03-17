@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionAuthLogout, StateAuth } from '@atd/core';
-import { NbMenuService } from '@nebular/theme';
+import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private nbMenuService: NbMenuService,
+    private sidebarService: NbSidebarService,
     private store: Store
   ) { }
 
@@ -35,5 +36,11 @@ export class HeaderComponent implements OnInit {
       .subscribe(() =>
         this.store.dispatch(new ActionAuthLogout())
       );
+  }
+
+  toggleSidebar(): boolean {
+    this.sidebarService.toggle(true, 'menu-sidebar');
+
+    return false;
   }
 }

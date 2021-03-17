@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { LogoComponentModule } from '@atd/core'
 
 import { HeaderComponent } from './header.component';
-import { NbActionsModule, NbContextMenuModule, NbUserModule } from '@nebular/theme';
+import { NbActionsModule, NbContextMenuModule, NbIconModule, NbSidebarModule, NbUserModule } from '@nebular/theme';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -13,7 +14,10 @@ import { NbActionsModule, NbContextMenuModule, NbUserModule } from '@nebular/the
     LogoComponentModule,
     NbActionsModule,
     NbUserModule,
-    NbContextMenuModule
+    NbContextMenuModule,
+    NbIconModule,
+    NbSidebarModule,
+    RouterModule
   ],
   declarations: [HeaderComponent],
   exports: [HeaderComponent]

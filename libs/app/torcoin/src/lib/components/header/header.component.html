@@ -1,5 +1,8 @@
 <div class="header-container">
-  <atd-logo></atd-logo>
+  <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+    <nb-icon icon="menu-2-outline"></nb-icon>
+  </a>
+  <atd-logo [routerLink]="['/home']" routerLinkActive="router-link-active"></atd-logo>
 </div>
 
 <div class="header-container">
