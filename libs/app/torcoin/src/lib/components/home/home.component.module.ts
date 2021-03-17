@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { HomeComponent } from './home.component';
+import { NbCardModule } from '@nebular/theme';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }
@@ -13,7 +14,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FlexLayoutModule
+    FlexLayoutModule,
+    NbCardModule
   ],
   declarations: [HomeComponent],
   exports: [HomeComponent]
