@@ -1,8 +1,73 @@
-<nb-card>
-  <nb-card-header>
-    Home
-  </nb-card-header>
+<div class="row">
+  <div class="col-xxl-5">
+    <div class="row">
+      <div class="col-md-6">
+        <nb-card class="link">
+          <nb-card-header>
+            <div
+              fxLayout="row"
+              fxLayoutAlign="center center"
+            >
+              Prices
+            </div>
+          </nb-card-header>
+          <nb-card-body>
+            <a
+              fxLayout="row"
+              fxLayoutAlign="center center"
+              [routerLink]="['/prices']"
+            >
+              <nb-icon icon="pie-chart-outline"></nb-icon>
+            </a>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <nb-card-body>
-  </nb-card-body>
-</nb-card>
+<div class="row">
+  <div class="col-xxl-12">
+    <nb-card class="favorites">
+      <nb-card-header>
+        <span>Favorites</span>
+      </nb-card-header>
+
+      <nb-card-body>
+        <div
+          *ngFor="let favorites of favoritesGrouped$ | async"
+          class="row"
+        >
+          <div
+            *ngFor="let crypto of favorites"
+            class="col-xxl-3"
+          >
+            <nb-card>
+              <nb-card-header
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="12px"
+              >
+                <img class="coin-logo" [src]="'https://s2.coinmarketcap.com/static/img/coins/64x64/' + crypto.id + '.png'">
+                <div>{{ crypto.name }}</div>
+              </nb-card-header>
+              <nb-card-body
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+              >
+                <div>{{ crypto.price | currency }}</div>
+                <div
+                  [class.price-gain]="crypto.change > 0"
+                  [class.price-loss]="crypto.change < 0"
+                >
+                  {{ crypto.change | number:'1.2-2' }}%
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+      </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+

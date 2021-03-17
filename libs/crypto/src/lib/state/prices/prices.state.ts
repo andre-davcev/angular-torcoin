@@ -47,9 +47,40 @@ export class StatePrices {
           price: value.quote[Currency.USD].price,
           change: value.quote[Currency.USD].percent_change_24h,
           marketCap: value.quote[Currency.USD].market_cap,
-          favorite: false
+          favorite: index < 6 ? true : false
         })
       );
+  }
+
+  @Selector() static favorites(state: StatePricesModel): Array<CryptoWithMetadata> {
+    return StatePrices.dataWithMetadata(state)
+      .filter((value: CryptoWithMetadata) =>
+        value.favorite
+      );
+  }
+
+  @Selector() static favoritesGrouped(state: StatePricesModel): Array<Array<CryptoWithMetadata>> {
+    const favorites: Array<CryptoWithMetadata> = StatePrices.favorites(state);
+    const grouped: Array<Array<CryptoWithMetadata>> = [];
+
+    let group: Array<CryptoWithMetadata> = [];
+    let mod: number;
+
+    favorites.forEach((crypto: CryptoWithMetadata, index: number) => {
+      if ((index % 4) === 0) {
+        if (index !== 0) {
+          grouped.push(group);
+        }
+
+        group = [];
+      }
+
+      group.push(crypto);
+    });
+
+    grouped.push(group);
+
+    return grouped;
   }
 
   @Selector() static status(state: StatePricesModel): StatusList | null {

@@ -1,5 +1,5 @@
 <nb-layout windowMode>
-  <nb-layout-header fixed *ngIf="authenticated$ | async">
+  <nb-layout-header fixed [style.visibility]="(authenticated$ | async) ? 'visible' : 'hidden'">
     <atd-header></atd-header>
   </nb-layout-header>
 
