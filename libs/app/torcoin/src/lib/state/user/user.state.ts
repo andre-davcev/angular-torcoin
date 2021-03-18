@@ -118,7 +118,7 @@ export class StateUser {
 
     return dispatch(new ActionUserSet(user)).pipe(
       filter(() =>
-        firebaseUser != null
+        user.id != null
       ),
       switchMap(() =>
         dispatch(new ActionUserGet(user))
@@ -203,6 +203,7 @@ export class StateUser {
       .doc(user.id)
       .valueChanges()
       .pipe(
+        take(1),
         switchMap((user: User) =>
           dispatch(new ActionUserSet(user))
         )
