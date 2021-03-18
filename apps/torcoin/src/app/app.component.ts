@@ -6,8 +6,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'atd-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 

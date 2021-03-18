@@ -117,6 +117,9 @@ export class StateUser {
     };
 
     return dispatch(new ActionUserSet(user)).pipe(
+      filter(() =>
+        firebaseUser != null
+      ),
       switchMap(() =>
         dispatch(new ActionUserGet(user))
       )

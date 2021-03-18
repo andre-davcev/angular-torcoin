@@ -1,5 +1,7 @@
 @import 'themes';
 
+@import 'styles/material.scss';
+
 ::ng-deep .nb-theme-corporate nb-card-header {
   display: none !important;
 }

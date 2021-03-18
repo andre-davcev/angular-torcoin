@@ -1,0 +1,26 @@
+@import 'variables';
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$theme-color-primary: mat-palette($app-color-primary-material);
+$theme-color-accent: mat-palette($app-color-primary-material, 500, 900, A100);
+$theme-color-warn: mat-palette($mat-deep-orange);
+$theme-color-error: mat-palette($app-color-primary-material);
+
+$theme-app: mat-light-theme(
+  $theme-color-primary,
+  $theme-color-accent,
+  $theme-color-warn
+);
+
+$theme-input: mat-light-theme(
+  $theme-color-primary,
+  $theme-color-accent,
+  $theme-color-error
+);
+
+@include angular-material-theme($theme-app);
+@include mat-form-field-theme($theme-input);
+@include mat-input-theme($theme-input);
