@@ -69,11 +69,9 @@ export class StateAuth implements NgxsOnInit {
     { patchState, dispatch }: StateContext<StateAuthModel>
   ) {
     return this.authFirebase.authState.pipe(
+      tap(t => console.log(t)),
       tap((user: firebase.User) =>
         patchState({ user })
-      ),
-      filter((user: firebase.User) =>
-        user != null
       ),
       switchMap((user: firebase.User) =>
         dispatch(new ActionUserLogin(user))
@@ -82,8 +80,11 @@ export class StateAuth implements NgxsOnInit {
   }
 
   @Action(ActionAuthLogout)
-  logout({ dispatch }: StateContext<StateAuthModel>) {
+  logout({ dispatch, patchState }: StateContext<StateAuthModel>) {
     return from(this.authFirebase.signOut()).pipe(
+      tap(() =>
+        patchState({ user: null })
+      ),
       switchMap(() =>
         dispatch(new Navigate(['/auth/login']))
       )

@@ -112,8 +112,8 @@ export class StateUser {
   ) {
     const user: User = {
       ...StateUser.user(getState()),
-      id: firebaseUser.uid,
-      email: firebaseUser.email
+      id: firebaseUser?.uid,
+      email: firebaseUser?.email
     };
 
     return dispatch(new ActionUserSet(user)).pipe(
