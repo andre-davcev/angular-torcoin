@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "torcoin-d7a64"
+  },
+  "targets": {
+    "torcoin-d7a64": {
+      "hosting": {
+        "torcoin": [
+          "torcoin-d7a64"
+        ]
+      }
+    }
+  }
+}

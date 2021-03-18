@@ -1,0 +1,32 @@
+<div class="header-container">
+  <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+    <nb-icon icon="menu-2-outline"></nb-icon>
+  </a>
+  <atd-logo [routerLink]="['/home']" routerLinkActive="router-link-active"></atd-logo>
+</div>
+
+<div class="header-container">
+  <nb-actions size="small">
+    <nb-action>
+      <a
+        class="github-link"
+        href="https://github.com/andre-davcev/torqoin"
+        title="GitHub"
+        aria-label="Torcoin on github"
+      >
+        <img class="github-button" src="assets/icons/github.png" alt="github">
+      </a>
+    </nb-action>
+    <nb-action class="control-item" icon="bell-outline"></nb-action>
+    <nb-action
+      *ngIf="fullName$ | async"
+      class="user-action"
+    >
+      <nb-user [nbContextMenu]="userMenu"
+               [onlyPicture]="false"
+               [name]="fullName$ | async"
+               [picture]="picture$ | async">
+      </nb-user>
+    </nb-action>
+  </nb-actions>
+</div>

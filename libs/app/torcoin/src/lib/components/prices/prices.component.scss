@@ -1,0 +1,61 @@
+@import "variables";
+
+@media screen and (min-width: 400px) {
+  .nb-column-name,
+  .nb-column-size {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .nb-column-name,
+  .nb-column-size,
+  .nb-column-kind {
+    width: 33.333%;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .nb-column-name {
+    width: 31%;
+  }
+  .nb-column-size,
+  .nb-column-kind,
+  .nb-column-items {
+    width: 23%;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.coin-logo {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+}
+
+.price-gain {
+  color: $app-color-money-gain;
+}
+
+.price-loss {
+  color: $app-color-money-loss;
+}
+
+td.mat-column-favorite {
+  mat-icon {
+    cursor: pointer;
+    color: $app-color-grey-text;
+
+    &.is-favorite {
+      color: $app-color-primary;
+    }
+  }
+}

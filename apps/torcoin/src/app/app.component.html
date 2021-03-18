@@ -1,0 +1,21 @@
+<nb-layout windowMode>
+  <nb-layout-header
+    fixed
+    *ngIf="authenticated$ | async"
+  >
+    <atd-header></atd-header>
+  </nb-layout-header>
+
+  <nb-sidebar
+    class="menu-sidebar"
+    tag="menu-sidebar"
+    responsive
+    *ngIf="authenticated$ | async"
+  >
+    <atd-sidebar></atd-sidebar>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+</nb-layout>

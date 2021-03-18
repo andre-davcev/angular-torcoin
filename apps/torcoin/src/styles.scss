@@ -1,0 +1,21 @@
+@import 'themes';
+
+@import 'styles/material.scss';
+
+::ng-deep .nb-theme-corporate nb-card-header {
+  display: none !important;
+}
+
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/globals';
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/grid';
+
+@include nb-install() {
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+};

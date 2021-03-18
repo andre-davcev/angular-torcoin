@@ -1,0 +1,43 @@
+$app-color-primary:               #E42C1B;
+$app-color-white:                 #F6F6F6;
+$app-color-grey-background:       #EFEFEF;
+$app-color-grey-text:             #6F7271;
+$app-color-grey-text-hovered:     #4C4C4C;
+$app-color-grey-logo:             #3D4644;
+$app-color-black-text-selected:   #383838;
+
+$app-color-money-gain:            rgb(5, 177, 105);
+$app-color-money-loss:              $app-color-primary;
+
+$app-color-primary-material: (
+  50: #f08b83,
+  100: #f08b83,
+  200: #ee786e,
+  300: #eb6559,
+  400: #e95145,
+  500: #e63e30,
+  600: #cf382b,
+  700: #b83226,
+  800: #a12b22,
+  900: #8a251d,
+  A100: #f08b83,
+  A200: #ee786e,
+  A400: #e95145,
+  A700: #b83226,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff
+  )
+)

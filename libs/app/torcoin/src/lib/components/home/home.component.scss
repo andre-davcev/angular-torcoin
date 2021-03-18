@@ -1,0 +1,34 @@
+@import "variables";
+
+:host {
+  nb-icon {
+    font-size: 4rem;
+    line-height: 4rem;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .link {
+    nb-card-body {
+      padding: 0;
+
+      a {
+        padding: 1rem 1.5rem;
+      }
+    }
+  }
+
+  .price-gain {
+    color: $app-color-money-gain;
+  }
+
+  .price-loss {
+    color: $app-color-money-loss;
+  }
+
+  .coin-logo {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+  }
+}
