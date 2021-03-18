@@ -11,8 +11,7 @@ import {
 import { PricesService } from '../../services';
 import { of } from 'rxjs';
 import { ResponseCryptocurrency } from '../../responses';
-import { Cryptocurrency, CryptoWithMetadata, StatusList } from '../../interfaces';
-import { Currency } from '../../enums';
+import { Cryptocurrency, StatusList } from '../../interfaces';
 
 @State<StatePricesModel>(StatePricesOptions)
 @Injectable()
@@ -38,50 +37,7 @@ export class StatePrices {
     return StatePrices.response(state)?.data || [];
   }
 
-  @Selector() static dataWithMetadata(state: StatePricesModel): Array<CryptoWithMetadata> {
-    return StatePrices.data(state)
-      .map((value: Cryptocurrency, index: number) =>
-        ({
-          ...value,
-          rank: index + 1,
-          price: value.quote[Currency.USD].price,
-          change: value.quote[Currency.USD].percent_change_24h,
-          marketCap: value.quote[Currency.USD].market_cap,
-          favorite: index < 6 ? true : false
-        })
-      );
-  }
 
-  @Selector() static favorites(state: StatePricesModel): Array<CryptoWithMetadata> {
-    return StatePrices.dataWithMetadata(state)
-      .filter((value: CryptoWithMetadata) =>
-        value.favorite
-      );
-  }
-
-  @Selector() static favoritesGrouped(state: StatePricesModel): Array<Array<CryptoWithMetadata>> {
-    const favorites: Array<CryptoWithMetadata> = StatePrices.favorites(state);
-    const grouped: Array<Array<CryptoWithMetadata>> = [];
-
-    let group: Array<CryptoWithMetadata> = [];
-    let mod: number;
-
-    favorites.forEach((crypto: CryptoWithMetadata, index: number) => {
-      if ((index % 4) === 0) {
-        if (index !== 0) {
-          grouped.push(group);
-        }
-
-        group = [];
-      }
-
-      group.push(crypto);
-    });
-
-    grouped.push(group);
-
-    return grouped;
-  }
 
   @Selector() static status(state: StatePricesModel): StatusList | null {
     return StatePrices.response(state)?.status || null;
@@ -94,7 +50,6 @@ export class StatePrices {
   @Selector() static loaded(state: StatePricesModel): boolean {
     return StatePrices.totalCount(state) > 0;
   }
-
 
   constructor(
     private service: PricesService

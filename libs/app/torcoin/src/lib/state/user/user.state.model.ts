@@ -1,9 +1,5 @@
-import { ResponseCryptocurrency } from '../../responses';
+import { User } from '../../models';
 
-export interface StatePricesModel {
-  response: ResponseCryptocurrency | null;
-  page: number;
-  pageSize: number;
-  loading: boolean;
-  errored: boolean;
+export interface StateUserModel {
+  user: User;
 }

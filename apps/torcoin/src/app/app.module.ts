@@ -10,7 +10,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
-import { FooterComponentModule, HeaderComponentModule, SidebarComponentModule } from '@atd/torcoin';
+import { FooterComponentModule, HeaderComponentModule, SidebarComponentModule, StateUser } from '@atd/torcoin';
 import { StatePrices } from '@atd/crypto';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +21,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NbAuthModule } from '@nebular/auth';
 import { NbFirebasePasswordStrategy } from '@nebular/firebase-auth';
 import { environment } from '../environments/environment';
-import { StateAuth } from '@atd/core';
+import { StateAuth } from '@atd/torcoin';
 
 @NgModule({
   declarations: [AppComponent],
@@ -107,6 +107,7 @@ import { StateAuth } from '@atd/core';
     NgxsRouterPluginModule.forRoot(),
     NgxsModule.forRoot([
       StateAuth,
+      StateUser,
       StatePrices
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot({disabled: environment.production})

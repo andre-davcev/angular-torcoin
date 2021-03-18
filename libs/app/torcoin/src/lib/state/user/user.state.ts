@@ -1,45 +1,50 @@
-import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { catchError, finalize, tap } from 'rxjs/operators'
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { AngularFirestore } from '@angular/fire/firestore';
 
-import { StatePricesModel } from './prices.state.model';
-import { StatePricesOptions } from './prices.state.options';
-import {
-  ActionPricesGet,
-  ActionPricesPage
-} from './prices.actions';
-import { PricesService } from '../../services';
-import { of } from 'rxjs';
-import { ResponseCryptocurrency } from '../../responses';
-import { Cryptocurrency, CryptoWithMetadata, StatusList } from '../../interfaces';
-import { Currency } from '../../enums';
+import { User } from '../../models';
+import { ActionUserGet, ActionUserLogin, ActionUserRegister, ActionUserSaveFavorite, ActionUserSet, ActionUserSetEmail } from './user.actions';
 
-@State<StatePricesModel>(StatePricesOptions)
+import { StateUserModel } from './user.state.model';
+import { StateUserOptions } from './user.state.options';
+
+import { filter, switchMap, take } from 'rxjs/operators';
+import { Cryptocurrency, CryptoWithMetadata, Currency, StatePrices } from '@atd/crypto';
+
+@State<StateUserModel>(StateUserOptions)
 @Injectable()
-export class StatePrices {
+export class StateUser {
 
-  @Selector() static response(state: StatePricesModel): ResponseCryptocurrency | null {
-    return state.response;
-  }
-  @Selector() static page(state: StatePricesModel): number {
-    return state.page;
-  }
-  @Selector() static pageSize(state: StatePricesModel): number {
-    return state.pageSize;
-  }
-  @Selector() static loading(state: StatePricesModel): boolean {
-    return state.loading;
-  }
-  @Selector() static errored(state: StatePricesModel): boolean {
-    return state.errored;
+  @Selector() static user(state: StateUserModel): User {
+    return state.user;
   }
 
-  @Selector() static data(state: StatePricesModel): Array<Cryptocurrency> {
-    return StatePrices.response(state)?.data || [];
+  @Selector() static id(state: StateUserModel): string {
+    return StateUser.user(state)?.id;
   }
 
-  @Selector() static dataWithMetadata(state: StatePricesModel): Array<CryptoWithMetadata> {
-    return StatePrices.data(state)
+  @Selector() static email(state: StateUserModel): string {
+    return StateUser.user(state)?.email || '';
+  }
+
+  @Selector() static fullName(state: StateUserModel): string {
+    return StateUser.user(state)?.fullName || '';
+  }
+
+  @Selector() static favoritesLookup(state: StateUserModel): Record<string, boolean> {
+    return StateUser.user(state)?.favorites || {};
+  }
+
+  @Selector() static picture(state: StateUserModel): string {
+    return StateUser.user(state)?.picture || '';
+  }
+
+  @Selector([StatePrices.data])
+  static dataWithMetadata(state: StateUserModel, data: Array<CryptoWithMetadata>): Array<CryptoWithMetadata>
+  {
+    const favoritesLookup: Record<string, boolean> = StateUser.favoritesLookup(state);
+
+    return data
       .map((value: Cryptocurrency, index: number) =>
         ({
           ...value,
@@ -47,60 +52,157 @@ export class StatePrices {
           price: value.quote[Currency.USD].price,
           change: value.quote[Currency.USD].percent_change_24h,
           marketCap: value.quote[Currency.USD].market_cap,
-          favorite: false
+          favorite:
+            favoritesLookup == null ?
+              false :
+              favoritesLookup[value.symbol] == null ?
+                false :
+                favoritesLookup[value.symbol]
         })
       );
   }
 
-  @Selector() static status(state: StatePricesModel): StatusList | null {
-    return StatePrices.response(state)?.status || null;
+  @Selector([StatePrices.data])
+  static favorites(state: StateUserModel, data: Array<CryptoWithMetadata>): Array<CryptoWithMetadata> {
+    return StateUser.dataWithMetadata(state, data)
+      .filter((value: CryptoWithMetadata) =>
+        value.favorite
+      );
   }
 
-  @Selector() static totalCount(state: StatePricesModel): number {
-    return StatePrices.status(state)?.total_count || 0;
+  @Selector([StatePrices.data])
+  static hasFavorites(state: StateUserModel, data: Array<CryptoWithMetadata>): boolean {
+    return StateUser.favorites(state, data).length > 0;
   }
 
-  @Selector() static loaded(state: StatePricesModel): boolean {
-    return StatePrices.totalCount(state) > 0;
-  }
+  @Selector([StatePrices.data])
+  static favoritesGrouped(state: StateUserModel, data: Array<CryptoWithMetadata>): Array<Array<CryptoWithMetadata>> {
+    const favorites: Array<CryptoWithMetadata> = StateUser.favorites(state, data);
+    const grouped: Array<Array<CryptoWithMetadata>> = [];
 
+    let group: Array<CryptoWithMetadata> = [];
+    let mod: number;
+
+    favorites.forEach((crypto: CryptoWithMetadata, index: number) => {
+      if ((index % 4) === 0) {
+        if (index !== 0) {
+          grouped.push(group);
+        }
+
+        group = [];
+      }
+
+      group.push(crypto);
+    });
+
+    grouped.push(group);
+
+    return grouped;
+  }
 
   constructor(
-    private service: PricesService
-  ) {}
+    private firestore: AngularFirestore,
+    private store: Store
+  ) { }
 
-  public ngxsOnInit(context: StateContext<StatePricesModel>) {
-    context.dispatch([
-      new ActionPricesGet()
-    ]);
-  }
-
-  @Action(ActionPricesGet)
-  get(
-    { patchState }: StateContext<StatePricesModel>,
-    { pageSize }: ActionPricesGet
+  @Action(ActionUserLogin)
+  login(
+    { getState, dispatch }: StateContext<StateUserModel>,
+    { firebaseUser }: ActionUserLogin
   ) {
-    patchState({ loading: true, pageSize, page: 0 });
-    return this.service.latest().pipe(
-      tap((response: ResponseCryptocurrency) =>
-        patchState({ errored: false, response })
-      ),
-      catchError((error: any) =>
-        of(patchState({ errored: true }))
-      ),
-      finalize(() =>
-        patchState({ loading: false })
+    const user: User = {
+      ...StateUser.user(getState()),
+      id: firebaseUser.uid,
+      email: firebaseUser.email
+    };
+
+    return dispatch(new ActionUserSet(user)).pipe(
+      switchMap(() =>
+        dispatch(new ActionUserGet(user))
       )
     );
   }
 
-  @Action(ActionPricesPage)
-  page(
-    { patchState, getState }: StateContext<StatePricesModel>
+  @Action(ActionUserRegister)
+  register(
+    { getState, dispatch }: StateContext<StateUserModel>,
+    { nbUser }: ActionUserRegister
   ) {
-    const state: StatePricesModel = getState();
-    const page: number = StatePrices.page(state);
+    const user: User = {
+      ...StateUser.user(getState()),
+      email: nbUser.email,
+      fullName: nbUser.fullName
+    };
 
-    patchState({ page: page + 1 });
+    return dispatch(new ActionUserSet(user)).pipe(
+      switchMap(() =>
+        this.store.select(StateUser.id)
+      ),
+      filter((id: string) =>
+        id != null
+      ),
+      take(1),
+      switchMap((id) =>
+        this.firestore.collection('users').doc(id).set(StateUser.user(getState()))
+      )
+    );
+  }
+
+  @Action(ActionUserSetEmail)
+  setEmail(
+    { getState, dispatch }: StateContext<StateUserModel>,
+    { email }: ActionUserSetEmail
+  ) {
+    const user: User = {
+      ...StateUser.user(getState()),
+      email
+    };
+
+    return dispatch(new ActionUserSet(user));
+  }
+
+  @Action(ActionUserSet)
+  set(
+    { getState, patchState }: StateContext<StateUserModel>,
+    { user }: ActionUserSet
+  ) {
+    user = {
+      ...StateUser.user(getState()),
+      ...user
+    };
+
+    patchState({ user });
+  }
+
+  @Action(ActionUserSaveFavorite)
+  saveFavorite(
+    { getState, dispatch }: StateContext<StateUserModel>,
+    { symbol, isFavorite }: ActionUserSaveFavorite
+  ) {
+    const user: User = StateUser.user(getState());
+
+    user.favorites[symbol] = isFavorite;
+
+    return dispatch(new ActionUserSet(user)).pipe(
+      switchMap(() =>
+        this.firestore.collection('users').doc(user.id).update(user)
+      )
+    );
+  }
+
+  @Action(ActionUserGet)
+  get(
+    { dispatch }: StateContext<StateUserModel>,
+    { user }: ActionUserGet
+  ) {
+    return this.firestore
+      .collection<User>('users')
+      .doc(user.id)
+      .valueChanges()
+      .pipe(
+        switchMap((user: User) =>
+          dispatch(new ActionUserSet(user))
+        )
+      );
   }
 }

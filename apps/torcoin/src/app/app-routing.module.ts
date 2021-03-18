@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
 import { HomeComponentModule, PricesComponentModule } from '@atd/torcoin';
 
-import { AuthComponentModule } from '@atd/core';
+import { AuthComponentModule } from '@atd/torcoin';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
 const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);

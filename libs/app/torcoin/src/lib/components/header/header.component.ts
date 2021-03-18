@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionAuthLogout, StateAuth } from '@atd/core';
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { User } from '../../models';
+import { StateUser } from '../../state';
+import { ActionAuthLogout, StateAuth } from '../../state/auth';
 
 @Component({
   selector: 'atd-header',
@@ -13,12 +15,10 @@ import { filter } from 'rxjs/operators';
 export class HeaderComponent implements OnInit {
 
   @Select(StateAuth.authenticated) authenticated$: Observable<boolean>;
+  @Select(StateUser.picture) picture$: string;
+  @Select(StateUser.fullName) fullName$: string;
 
   public userMenu = [ { title: 'Log Out' } ];
-  public user = {
-    name: 'Elon Musk',
-    picture: '//cdn.shopify.com/s/files/1/0345/8429/7516/files/AJ_Pryor.jpg?v=1584330112'
-  }
 
   constructor(
     private nbMenuService: NbMenuService,

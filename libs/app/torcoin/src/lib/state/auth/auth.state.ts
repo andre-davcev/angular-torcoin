@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators'
+import { filter, switchMap, tap } from 'rxjs/operators'
 import { NbAuthService, NbAuthJWTToken } from '@nebular/auth';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
@@ -14,6 +14,7 @@ import {
 } from './auth.actions';
 import { from } from 'rxjs';
 import { Navigate } from '@ngxs/router-plugin';
+import { ActionUserLogin } from '../user';
 
 @State<StateAuthModel>(StateAuthOptions)
 @Injectable()
@@ -62,13 +63,20 @@ export class StateAuth implements NgxsOnInit {
     );
   }
 
+
   @Action(ActionAuthWatchFirebase, { cancelUncompleted: true })
   watchFirebase(
-    { patchState }: StateContext<StateAuthModel>
+    { patchState, dispatch }: StateContext<StateAuthModel>
   ) {
     return this.authFirebase.authState.pipe(
       tap((user: firebase.User) =>
         patchState({ user })
+      ),
+      filter((user: firebase.User) =>
+        user != null
+      ),
+      switchMap((user: firebase.User) =>
+        dispatch(new ActionUserLogin(user))
       )
     );
   }

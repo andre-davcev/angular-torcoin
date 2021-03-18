@@ -33,7 +33,23 @@
         <span>Favorites</span>
       </nb-card-header>
 
-      <nb-card-body>
+      <nb-card-body *ngIf="!(hasFavorites$ | async)">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="center center"
+        >
+          <div
+            fxLayout="column"
+            fxLayoutAlign="start center"
+            fxLayoutGap="8px"
+          >
+            <h4>No favorite crypto currencies?</h4>
+            <p>Head to the prices page and start joining the digital revolution!</p>
+          </div>
+        </div>
+      </nb-card-body>
+
+      <nb-card-body *ngIf="hasFavorites$ | async">
         <div
           *ngFor="let favorites of favoritesGrouped$ | async"
           class="row"

@@ -3,14 +3,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { BaseComponent } from '@atd/core';
-import { CryptoWithMetadata, StatePrices } from '@atd/crypto';
+import { CryptoWithMetadata } from '@atd/crypto';
 
 import { PricesColumnKey } from './prices-column-key.enum';
+import { ActionUserSaveFavorite, StateUser } from '../../state';
 
 @Component({
   selector: 'atd-prices',
@@ -18,7 +19,7 @@ import { PricesColumnKey } from './prices-column-key.enum';
   styleUrls: ['./prices.component.scss'],
 })
 export class PricesComponent extends BaseComponent implements AfterViewInit {
-  @Select(StatePrices.dataWithMetadata) data$: Observable<Array<CryptoWithMetadata>>;
+  @Select(StateUser.dataWithMetadata) data$: Observable<Array<CryptoWithMetadata>>;
 
   public PricesColumnKey: any = PricesColumnKey;
 
@@ -28,7 +29,9 @@ export class PricesComponent extends BaseComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  constructor() {
+  constructor(
+    private store: Store
+  ) {
     super();
   }
 
@@ -55,5 +58,7 @@ export class PricesComponent extends BaseComponent implements AfterViewInit {
 
   public clickedFavorite(row: CryptoWithMetadata) {
     row.favorite = !row.favorite;
+
+    this.store.dispatch(new ActionUserSaveFavorite(row.symbol, row.favorite));
   }
 }

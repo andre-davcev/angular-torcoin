@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { StateAuth } from '@atd/core';
+import { StateAuth } from '@atd/torcoin';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 

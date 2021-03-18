@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NbCardModule, NbLayoutModule} from '@nebular/theme';
-import { NbAuthModule, NbLoginComponent, NbRegisterComponent } from '@nebular/auth';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbInputModule, NbLayoutModule} from '@nebular/theme';
+import { NbAuthModule, NbLoginComponent } from '@nebular/auth';
 import { AuthComponent } from './auth.component';
+import { AuthRegisterComponent } from './auth-register.component';
+import { FormsModule } from '@angular/forms';
 
 export const routes: Routes = [
   {
@@ -18,7 +20,7 @@ export const routes: Routes = [
       },
       {
         path: 'register',
-        component: NbRegisterComponent
+        component: AuthRegisterComponent
       }
     ]
   }
@@ -31,9 +33,14 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
     NbLayoutModule,
     NbCardModule,
-    NbAuthModule
+    NbAuthModule,
+
+    FormsModule,
+    NbInputModule,
+    NbCheckboxModule,
+    NbButtonModule
   ],
-  declarations: [AuthComponent],
+  declarations: [AuthComponent, AuthRegisterComponent],
   exports: []
 })
 export class AuthComponentModule {}
