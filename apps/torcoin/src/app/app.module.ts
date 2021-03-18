@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbSelectModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbSelectModule, NbDialogModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { AngularFireModule } from '@angular/fire';
@@ -42,6 +42,7 @@ import { StateAuth } from '@atd/torcoin';
     AngularFirestoreModule,
 
     NbThemeModule.forRoot({ name: 'corporate' }),
+    NbDialogModule.forRoot(),
     NbLayoutModule,
     NbEvaIconsModule,
     NbSidebarModule.forRoot(),

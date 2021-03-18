@@ -69,7 +69,6 @@ export class StateAuth implements NgxsOnInit {
     { patchState, dispatch }: StateContext<StateAuthModel>
   ) {
     return this.authFirebase.authState.pipe(
-      tap(t => console.log(t)),
       tap((user: firebase.User) =>
         patchState({ user })
       ),
