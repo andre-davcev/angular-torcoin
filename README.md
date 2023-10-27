@@ -1,21 +1,13 @@
-# Sandbox
+# Torcoin
 
-This is my personal sandbox for coding projects. My favorite framework to develop in is the [Angular](https://angular.io/) front-end framework. Although I have over a decade of enterprise experience working with Angular, this space should evolve to feature [React](https://react.dev/), [Go](https://go.dev/), and the [XRPL](https://xrpl.org/introduction.html)!
+This is an [Angular](https://angular.io/) sandbox project that allows users to view crypto prices ranked by market cap. It's a stripped down version of [CoinMarketCap](https://coinmarketcap.com/). Users can create accounts using Firebase auth and then use their account to track their favorite coins! The tech stack includes [Angular](https://angular.io/), [Nebular](https://akveo.github.io/nebular/), [RxJS](https://rxjs.dev/), [NGXS](https://ngxs.gitbook.io/ngxs), [Firebase Auth](https://firebase.google.com/docs/auth/web/start), [Firebase Firestore](https://firebase.google.com/docs/firestore), [Github Actions](https://github.com/features/actions), [Express.js](https://expressjs.com/) and the [CoinMarketCap API](https://coinmarketcap.com/api/).
 
-## Angular Projects
+# Install
 
-1. **Torcoin:** Allows users to view crypto prices ranked by market cap. It's a stripped down version of [CoinMarketCap](https://coinmarketcap.com/). Users can create accounts using Firebase auth and then use their account to track favorite coins! Tech stack includes [Angular](https://angular.io/), [Nebular](https://akveo.github.io/nebular/), [RxJS](https://rxjs.dev/), [NGXS](https://ngxs.gitbook.io/ngxs), (Firebase Auth)(https://firebase.google.com/docs/auth/web/start), [Firebase Firestore](https://firebase.google.com/docs/firestore), [Github Actions](https://github.com/features/actions), [Express.js](https://expressjs.com/) and the [CoinMarketCap API](https://coinmarketcap.com/api/). `npx nx serve torcoin`
+`npm i`
 
-## React Projects
+# Run
 
-COMING SOON!
-
-## Go Projects
-
-COMING SOON!
-
-## XRPL Projects
-
-COMING SOON!
+`npx nx serve torcoin`
 
 ## Thanks for checking out my code!
